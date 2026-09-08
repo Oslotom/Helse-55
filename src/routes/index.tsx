@@ -3,9 +3,13 @@ import { useState } from "react";
 import { Header } from "@/components/pulse/Header";
 import { AiSummaryCard, ScoreRow } from "@/components/pulse/SummaryCards";
 import { SleepSection } from "@/components/pulse/SleepSection";
+import { SleepPage } from "@/components/pulse/SleepPage";
 import { ActivitySection } from "@/components/pulse/ActivitySection";
 import { BodySection } from "@/components/pulse/BodySection";
 import { HeartSection } from "@/components/pulse/HeartSection";
+import { TrendsSection } from "@/components/pulse/TrendsSection";
+import { MoodSection } from "@/components/pulse/MoodSection";
+import { MoodCheckIn } from "@/components/pulse/MoodCheckIn";
 import { BottomTabs, tabs, type TabKey } from "@/components/pulse/BottomTabs";
 import { SectionCard } from "@/components/pulse/primitives";
 
@@ -58,13 +62,18 @@ function Dashboard() {
               <ActivitySection delay={240} />
               <BodySection delay={300} />
               <HeartSection delay={360} />
+              <MoodSection delay={420} />
+              <TrendsSection delay={480} />
             </div>
           </>
+        ) : tab === "sleep" ? (
+          <SleepPage />
         ) : (
           <ComingSoon label={activeLabel} />
         )}
       </div>
       <BottomTabs active={tab} onChange={setTab} />
+      <MoodCheckIn />
     </main>
   );
 }

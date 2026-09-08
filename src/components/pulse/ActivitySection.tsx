@@ -1,13 +1,27 @@
 import { useState } from "react";
-import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+} from "recharts";
 import { SectionCard, ChartTooltip, ChartFrame, Pill } from "./primitives";
+import { Progress } from "@/components/ui/progress";
 import { toneColor, toneSoft } from "./tones";
-import { activityWeek } from "@/data/pulse-data";
+import { activityWeek, stepsGoal, stepsMonth } from "@/data/pulse-data";
 
 export function ActivitySection({ delay = 0 }: { delay?: number }) {
   const [range, setRange] = useState<"7d" | "5d">("7d");
   const data = range === "7d" ? activityWeek : activityWeek.slice(-5);
   const total = data.reduce((s, d) => s + d.steps, 0);
+  const stepsToday = activityWeek[activityWeek.length - 1]!.steps;
+  const stepsPct = Math.min(100, Math.round((stepsToday / stepsGoal) * 100));
+  const monthAvg = stepsMonth.reduce((s, d) => s + d.steps, 0) / stepsMonth.length;
 
   return (
     <SectionCard
@@ -28,7 +42,13 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
         <span className="text-3xl font-extrabold tracking-tight">
           {Math.round(total / data.length).toLocaleString("en-GB")}
         </span>
-        <span className="text-xs text-muted-foreground">avg steps / day2</span>
+        <span className="text-xs text-muted-foreground">avg steps / day</span>
+      </div>
+      <div className="mb-4 flex items-center gap-3">
+        <Progress value={stepsPct} className="h-2 flex-1" />
+        <span className="shrink-0 text-xs font-bold text-muted-foreground">
+          {stepsToday.toLocaleString("en-GB")} / {stepsGoal.toLocaleString("en-GB")} today
+        </span>
       </div>
       <ChartFrame height={180}>
         <ResponsiveContainer width="100%" height="100%">
@@ -62,6 +82,57 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
               ))}
             </Bar>
           </BarChart>
+        </ResponsiveContainer>
+      </ChartFrame>
+
+      <div className="mt-5 mb-2 flex items-baseline justify-between">
+        <h3 className="text-xs font-bold text-muted-foreground">30-day trend</h3>
+        <span className="text-xs font-bold text-muted-foreground">
+          {Math.round(monthAvg).toLocaleString("en-GB")} avg steps / day
+        </span>
+      </div>
+      <ChartFrame height={120}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={stepsMonth} margin={{ top: 8, right: 6, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="stepsFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={toneColor.sky} stopOpacity={0.35} />
+                <stop offset="100%" stopColor={toneColor.sky} stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid vertical={false} stroke="var(--track)" />
+            <XAxis
+              dataKey="date"
+              interval={6}
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 10, fill: "var(--muted-foreground)", fontWeight: 700 }}
+            />
+            <Tooltip
+              content={
+                <ChartTooltip
+                  render={(row) => (
+                    <div>
+                      <p className="font-extrabold">
+                        {Number(row["steps"]).toLocaleString("en-GB")} steps
+                      </p>
+                      <p className="text-muted-foreground">{String(row["date"])}</p>
+                    </div>
+                  )}
+                />
+              }
+            />
+            <Area
+              type="monotone"
+              dataKey="steps"
+              stroke={toneColor.sky}
+              strokeWidth={3}
+              fill="url(#stepsFill)"
+              animationDuration={1100}
+              dot={false}
+              activeDot={{ r: 5, fill: toneColor.sky, stroke: "var(--card)", strokeWidth: 3 }}
+            />
+          </AreaChart>
         </ResponsiveContainer>
       </ChartFrame>
     </SectionCard>
