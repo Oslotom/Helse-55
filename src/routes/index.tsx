@@ -5,6 +5,7 @@ import { AiSummaryCard, ScoreRow } from "@/components/pulse/SummaryCards";
 import { SleepSection } from "@/components/pulse/SleepSection";
 import { SleepPage } from "@/components/pulse/SleepPage";
 import { ActivitySection } from "@/components/pulse/ActivitySection";
+import { StepsPage } from "@/components/pulse/StepsPage";
 import { BodySection } from "@/components/pulse/BodySection";
 import { HeartSection } from "@/components/pulse/HeartSection";
 import { TrendsSection } from "@/components/pulse/TrendsSection";
@@ -68,6 +69,8 @@ function Dashboard() {
           </>
         ) : tab === "sleep" ? (
           <SleepPage />
+        ) : tab === "activity" ? (
+          <StepsPage />
         ) : (
           <ComingSoon label={activeLabel} />
         )}

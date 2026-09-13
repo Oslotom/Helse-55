@@ -151,6 +151,25 @@ export const stepsMonth = Array.from({ length: 30 }, (_, i) => {
   };
 });
 
+// Average steps for the past 12 months
+export const stepsYear = Array.from({ length: 12 }, (_, i) => {
+  const d = new Date(2025, 9 + i, 1);
+  const wave = Math.sin(i / 2) * 900;
+  const steps = Math.max(4000, Math.round(8200 + wave + i * 45));
+  return {
+    month: d.toLocaleDateString("en-GB", { month: "short" }),
+    steps,
+  };
+});
+
+// Rotating activity-specific insights shown per period on the Steps page
+export const activityInsights = [
+  "You're 1,240 steps ahead of your 7-day average so far today — a short walk after dinner would get you to goal.",
+  "This week's long run on Sunday pushed your average well above goal. Tuesday and Wednesday were your lightest days.",
+  "This month's steps are trending up, with a strong back half. Rest days are staying well spaced out.",
+  "Your yearly average has climbed steadily since autumn, with activity levels highest through the spring months.",
+];
+
 // Weight trend last 30 days (kg, smoothed)
 export const weightMonth = Array.from({ length: 30 }, (_, i) => {
   const start = 79.8;
