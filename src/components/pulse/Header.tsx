@@ -19,7 +19,7 @@ export function Header() {
           </p>
           <p className="text-xs text-muted-foreground">{user.today}</p>
           <p className="mt-1.5">
-            <Badge tone="mint">Recoveddry22: {user.recovery}</Badge>
+            <Badge tone="mint">Recovery: {user.recovery}</Badge>
           </p>
         </div>
       </div>

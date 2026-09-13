@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { HeroBanner } from "@/components/pulse/HeroBanner";
 import { Header } from "@/components/pulse/Header";
 import { AiSummaryCard, ScoreRow } from "@/components/pulse/SummaryCards";
 import { SleepSection } from "@/components/pulse/SleepSection";
@@ -51,8 +52,8 @@ function Dashboard() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-4 pt-6 pb-28">
-      <h1 className="sr-only">Pulse health and activity dashboard</h1>
       <div className="flex flex-col gap-4">
+        <HeroBanner />
         <Header />
         {tab === "today" ? (
           <>

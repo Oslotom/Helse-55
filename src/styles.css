@@ -197,3 +197,44 @@
     transform: translateY(0);
   }
 }
+
+@utility hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(32px);
+  opacity: 0.6;
+  animation: hero-orb-float 9s ease-in-out infinite;
+}
+
+@keyframes hero-orb-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0) scale(1.08);
+  }
+}
+
+@utility hero-pulse-path {
+  animation: hero-pulse-draw 3.2s ease-in-out infinite;
+}
+
+@keyframes hero-pulse-draw {
+  0% {
+    stroke-dashoffset: 240;
+  }
+  60% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -40;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb,
+  .hero-pulse-path {
+    animation: none !important;
+  }
+}
