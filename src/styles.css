@@ -69,7 +69,8 @@
   --color-lavender-soft: var(--lavender-soft);
   --color-track: var(--track);
   --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
-  --shadow-soft: 0 2px 4px -2px oklch(0.6 0.05 220 / 0.08), 0 12px 28px -12px oklch(0.6 0.05 220 / 0.18);
+  --shadow-soft:
+    0 2px 4px -2px oklch(0.6 0.05 220 / 0.08), 0 12px 28px -12px oklch(0.6 0.05 220 / 0.18);
   --shadow-ring: 0 8px 24px -14px oklch(0.6 0.06 200 / 0.35);
 }
 
@@ -119,7 +120,6 @@
   --sidebar-border: oklch(0.94 0.012 220);
   --sidebar-ring: oklch(0.82 0.07 180);
 }
-
 
 .dark {
   --background: oklch(0.129 0.042 264.695);
@@ -230,6 +230,33 @@
   100% {
     stroke-dashoffset: -40;
   }
+}
+
+@utility iphone-tilt {
+  transform: perspective(1200px) rotateY(-12deg) rotateX(4deg) rotateZ(-4deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.iphone-tilt:hover {
+  transform: perspective(1200px) rotateY(-4deg) rotateX(1deg) rotateZ(-1deg) translateY(-6px);
+}
+
+@utility sleep-card-tilt {
+  transform: perspective(1200px) rotateZ(4deg) rotateX(3deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sleep-card-tilt:hover {
+  transform: perspective(1200px) rotateZ(0deg) rotateX(0deg) translateY(-6px);
+}
+
+@utility hero-gif-tilt {
+  transform: perspective(1200px) rotateY(8deg) rotateZ(3deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-gif-tilt:hover {
+  transform: perspective(1200px) rotateY(0deg) rotateZ(0deg) translateY(-6px);
 }
 
 @media (prefers-reduced-motion: reduce) {

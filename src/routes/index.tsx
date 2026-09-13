@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { Sparkles } from "lucide-react";
 import { HeroBanner } from "@/components/pulse/HeroBanner";
 import { Header } from "@/components/pulse/Header";
 import { ScoreRow } from "@/components/pulse/SummaryCards";
@@ -74,6 +75,15 @@ function Dashboard() {
         ) : (
           <ComingSoon label={activeLabel} />
         )}
+      </div>
+      <div className="mt-10 flex justify-center">
+        <Link
+          to="/landing"
+          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--track)] bg-card px-4 py-2 text-xs font-extrabold text-muted-foreground transition-colors hover:text-foreground"
+        >
+          About Pulse
+          <Sparkles className="size-3.5" />
+        </Link>
       </div>
       <BottomTabs active={tab} onChange={setTab} />
       <MoodCheckIn />

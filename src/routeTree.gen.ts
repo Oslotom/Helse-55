@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeelingsRouteImport } from './routes/feelings'
+import { Route as LandingRouteImport } from './routes/landing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const FeelingsRoute = FeelingsRouteImport.update({
   path: '/feelings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/feelings': typeof FeelingsRoute
+  '/landing': typeof LandingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/feelings': typeof FeelingsRoute
+  '/landing': typeof LandingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/feelings': typeof FeelingsRoute
+  '/landing': typeof LandingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feelings'
+  fullPaths: '/' | '/feelings' | '/landing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feelings'
-  id: '__root__' | '/' | '/feelings'
+  to: '/' | '/feelings' | '/landing'
+  id: '__root__' | '/' | '/feelings' | '/landing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeelingsRoute: typeof FeelingsRoute
+  LandingRoute: typeof LandingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeelingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeelingsRoute: FeelingsRoute,
+  LandingRoute: LandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
