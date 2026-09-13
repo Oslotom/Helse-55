@@ -6,10 +6,20 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// GitHub Pages serves the repo at https://<user>.github.io/<repo>/, so the
+// app needs to know it's not mounted at the domain root.
+const base = process.env.GITHUB_PAGES ? "/Helse-55/" : "/";
+
 export default defineConfig({
+  vite: { base },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    router: { basepath: base },
+    client: { base },
+    // GitHub Pages has no server runtime — prerender every route to static
+    // HTML so the site works with plain static file hosting.
+    prerender: process.env.GITHUB_PAGES ? { enabled: true, crawlLinks: true } : undefined,
   },
 });
