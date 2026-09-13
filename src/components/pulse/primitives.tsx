@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toneColor, toneSoft, type Tone } from "./tones";
 
@@ -154,5 +155,42 @@ export function ChartFrame({ children, height = 180 }: { children: ReactNode; he
     <div style={{ height }} className="w-full">
       {mounted ? children : null}
     </div>
+  );
+}
+
+export function ExpandableChart({ expanded, children }: { expanded: boolean; children: ReactNode }) {
+  return (
+    <div
+      className="grid transition-[grid-template-rows] duration-300 ease-out"
+      style={{ gridTemplateRows: expanded ? "1fr" : "0fr" }}
+    >
+      <div className="overflow-hidden">{children}</div>
+    </div>
+  );
+}
+
+export function ExpandToggle({
+  expanded,
+  onClick,
+  labelShow = "Show chart",
+  labelHide = "Hide chart",
+}: {
+  expanded: boolean;
+  onClick: () => void;
+  labelShow?: string;
+  labelHide?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={expanded}
+      className="mt-1 flex w-full items-center justify-center gap-1 rounded-xl py-1.5 text-xs font-bold text-muted-foreground transition-colors hover:text-foreground"
+    >
+      {expanded ? labelHide : labelShow}
+      <ChevronDown
+        className={cn("size-3.5 transition-transform duration-300", expanded && "rotate-180")}
+      />
+    </button>
   );
 }
