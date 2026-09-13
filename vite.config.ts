@@ -8,7 +8,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // GitHub Pages serves the repo at https://<user>.github.io/<repo>/, so the
 // app needs to know it's not mounted at the domain root.
-const base = process.env.GITHUB_PAGES ? "/Helse-55/" : "/";
+const base = process.env["GITHUB_PAGES"] ? "/Helse-55/" : "/";
 
 export default defineConfig({
   vite: { base },
@@ -20,6 +20,6 @@ export default defineConfig({
     client: { base },
     // GitHub Pages has no server runtime — prerender every route to static
     // HTML so the site works with plain static file hosting.
-    prerender: process.env.GITHUB_PAGES ? { enabled: true, crawlLinks: true } : undefined,
+    prerender: process.env["GITHUB_PAGES"] ? { enabled: true, crawlLinks: true } : undefined,
   },
 });
