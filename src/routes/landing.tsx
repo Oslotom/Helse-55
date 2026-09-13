@@ -68,51 +68,45 @@ function LandingPage() {
     <main className="min-h-screen bg-background">
       {/* Hero */}
       <section
-        className="relative isolate overflow-hidden px-4 pt-10 pb-20"
-        style={{
-          background:
-            "radial-gradient(120% 140% at 0% 0%, var(--mint-soft), transparent 60%), " +
-            "radial-gradient(120% 140% at 100% 0%, var(--sky-soft), transparent 60%), " +
-            "radial-gradient(140% 160% at 50% 130%, var(--lavender-soft), transparent 65%), " +
-            "var(--card)",
-        }}
-      >
-        <div className="mx-auto grid w-full max-w-5xl items-center gap-12 md:grid-cols-2">
-          <div className="rise-in">
-            <p className="text-xs font-extrabold tracking-[0.2em] text-muted-foreground uppercase">
-              Pulse
-            </p>
-            <h1 className="mt-3 text-4xl leading-tight font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Your daily health, in view.
-            </h1>
-            <p className="mt-4 max-w-md text-base font-semibold text-muted-foreground">
-              Sleep, steps, weight and heart rate — one calm dashboard that makes sense of it all,
-              every morning.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
-              >
-                Open the dashboard
-                <ArrowRight className="size-4" />
-              </Link>
-              <a
-                href="#features"
-                className="inline-flex items-center rounded-full border-[var(--track)] px-6 py-3 text-sm font-extrabold text-foreground transition-colors hover:bg-accent"
-              >
-                Explore features
-              </a>
-            </div>
-          </div>
-
-                    <div className="relative flex justify-center md:justify-end">
-            <IphoneMockup>
-              <HeroGif />
-            </IphoneMockup>
-          </div>
-        </div>
-      </section>
+  className="relative isolate overflow-hidden px-4 pt-10 pb-20"
+  style={{
+    background:
+      "radial-gradient(120% 140% at 0% 0%, var(--mint-soft), transparent 60%), " +
+      "radial-gradient(120% 140% at 100% 0%, var(--sky-soft), transparent 60%), " +
+      "radial-gradient(140% 160% at 50% 130%, var(--lavender-soft), transparent 65%), " +
+      "var(--card)",
+  }}
+>
+  <div className="mx-auto grid w-full max-w-5xl items-center gap-12 md:grid-cols-2">
+    <div className="rise-in">
+      <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+        Stay Motivated
+      </h1>
+      <p className="mt-4 max-w-md text-base font-semibold text-muted-foreground">
+        Hevy is a free workout tracker for iOS and Android. Build routines and track progress with friends.
+      </p>
+      <div className="mt-7 flex flex-wrap items-center gap-3">
+        <a
+          href="https://apps.apple.com/app/apple-store/id1458862350"
+          className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
+        >
+          App Store
+        </a>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.hevy"
+          className="inline-flex items-center rounded-full border-[var(--track)] px-6 py-3 text-sm font-extrabold text-foreground transition-colors hover:bg-accent"
+        >
+          Google Play
+        </a>
+      </div>
+    </div>
+    <div className="relative flex justify-center md:justify-end">
+      <IphoneMockup>
+        <HeroGif />
+      </IphoneMockup>
+    </div>
+  </div>
+</section>
 
       {/* Features */}
       <section id="features" className="mx-auto w-full max-w-5xl px-4 py-20">
@@ -149,28 +143,35 @@ function LandingPage() {
 
       {/* CTA */}
       <section className="mx-auto w-full max-w-5xl px-4 pb-20">
-        <div
-          className="rounded-3xl px-8 py-14 text-center"
-          style={{
-            background:
-              "radial-gradient(120% 140% at 0% 0%, var(--sky-soft), transparent 60%), " +
-              "radial-gradient(120% 140% at 100% 100%, var(--mint-soft), transparent 60%), " +
-              "var(--card)",
-          }}
-        >
-          <h2 className="text-3xl font-extrabold tracking-tight">Ready to meet your Pulse?</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm font-semibold text-muted-foreground">
-            Jump into the dashboard and see your day at a glance.
-          </p>
-          <Link
-            to="/"
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
-          >
-            Open the dashboard
-            <ArrowRight className="size-4" />
-          </Link>
-        </div>
-      </section>
+  <div
+    className="rounded-3xl px-8 py-14 text-center"
+    style={{
+      background:
+        "radial-gradient(120% 140% at 0% 0%, var(--sky-soft), transparent 60%), " +
+        "radial-gradient(120% 140% at 100% 100%, var(--mint-soft), transparent 60%), " +
+        "var(--card)",
+    }}
+  >
+    <h2 className="text-3xl font-extrabold tracking-tight">Ready to get started?</h2>
+    <p className="mx-auto mt-3 max-w-md text-sm font-semibold text-muted-foreground">
+      The Easiest Way to Stay Consistent in the Gym
+    </p>
+    <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href="https://apps.apple.com/app/apple-store/id1458862350"
+        className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
+      >
+        App Store
+      </a>
+      <a
+        href="https://play.google.com/store/apps/details?id=com.hevy"
+        className="inline-flex items-center rounded-full border-[var(--track)] px-6 py-3 text-sm font-extrabold text-foreground transition-colors hover:bg-accent"
+      >
+        Google Play
+      </a>
+    </div>
+  </div>
+</section>
 
       <footer className="border-t border-[var(--track)] px-4 py-8 text-center">
         <p className="text-xs font-bold text-muted-foreground">

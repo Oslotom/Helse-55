@@ -15,6 +15,7 @@ import { MoodSection } from "@/components/pulse/MoodSection";
 import { MoodCheckIn } from "@/components/pulse/MoodCheckIn";
 import { BottomTabs, tabs, type TabKey } from "@/components/pulse/BottomTabs";
 import { SectionCard } from "@/components/pulse/primitives";
+import { DiagramSection } from "@/components/pulse/DiagramSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,6 +57,7 @@ function Dashboard() {
       <div className="flex flex-col gap-4">
         <HeroBanner />
         <Header />
+        <DiagramSection />
         {tab === "today" ? (
           <>
             <ScoreRow />
