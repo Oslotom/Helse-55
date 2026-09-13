@@ -11,6 +11,7 @@ import {
   XAxis,
 } from "recharts";
 import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Pill } from "./primitives";
+import { MiniChart } from "./MiniChart";
 import { Progress } from "@/components/ui/progress";
 import { toneColor, toneSoft } from "./tones";
 import { activityWeek, stepsGoal, stepsMonth } from "@/data/pulse-data";
@@ -39,11 +40,18 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
         </div>
       }
     >
-      <div className="mb-1 flex items-baseline gap-2">
-        <span className="text-3xl font-extrabold tracking-tight">
-          {Math.round(total / data.length).toLocaleString("en-GB")}
-        </span>
-        <span className="text-xs text-muted-foreground">avg steps / day</span>
+      <div className="mb-1 flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-extrabold tracking-tight">
+            {Math.round(total / data.length).toLocaleString("en-GB")}
+          </span>
+          <span className="text-xs text-muted-foreground">avg steps / day</span>
+        </div>
+        {!expanded && (
+          <div className="shrink-0 opacity-80">
+            <MiniChart data={data} dataKey="steps" chartType="bar" color={toneColor.sky} height={48} width={68} />
+          </div>
+        )}
       </div>
       <div className="mb-4 flex items-center gap-3">
         <Progress value={stepsPct} className="h-2 flex-1" />

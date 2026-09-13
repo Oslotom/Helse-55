@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { MiniChart } from "./MiniChart";
 import { toneColor } from "./tones";
 import { weightMonth } from "@/data/pulse-data";
 
@@ -12,11 +13,18 @@ export function BodySection({ delay = 0 }: { delay?: number }) {
 
   return (
     <SectionCard title="Weight" delay={delay} action={<Badge tone="lavender">30 days</Badge>}>
-      <div className="mb-1 flex items-baseline gap-2">
-        <span className="text-3xl font-extrabold tracking-tight">{latest.kg} kg</span>
-        <span className="text-xs text-muted-foreground">
-          {diff <= 0 ? diff : `+${diff}`} kg this month
-        </span>
+      <div className="mb-1 flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-extrabold tracking-tight">{latest.kg} kg</span>
+          <span className="text-xs text-muted-foreground">
+            {diff <= 0 ? diff : `+${diff}`} kg this month
+          </span>
+        </div>
+        {!expanded && (
+          <div className="shrink-0 opacity-80">
+            <MiniChart data={weightMonth} dataKey="kg" chartType="area" color={toneColor.lavender} height={48} width={68} />
+          </div>
+        )}
       </div>
 
       <ExpandableChart expanded={expanded}>

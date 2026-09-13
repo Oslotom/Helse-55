@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { MiniChart } from "./MiniChart";
 import { toneColor } from "./tones";
 import { restingHr } from "@/data/pulse-data";
 
@@ -15,9 +16,16 @@ export function HeartSection({ delay = 0 }: { delay?: number }) {
       delay={delay}
       action={<Badge tone="amber">14 days</Badge>}
     >
-      <div className="mb-1 flex items-baseline gap-2">
-        <span className="text-3xl font-extrabold tracking-tight">{latest.bpm} bpm</span>
-        <span className="text-xs text-muted-foreground">{avg} bpm average</span>
+      <div className="mb-1 flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-extrabold tracking-tight">{latest.bpm} bpm</span>
+          <span className="text-xs text-muted-foreground">{avg} bpm average</span>
+        </div>
+        {!expanded && (
+          <div className="shrink-0 opacity-80">
+            <MiniChart data={restingHr} dataKey="bpm" chartType="area" color={toneColor.amber} height={48} width={68} />
+          </div>
+        )}
       </div>
 
       <ExpandableChart expanded={expanded}>

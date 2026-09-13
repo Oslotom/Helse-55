@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { HeroBanner } from "@/components/pulse/HeroBanner";
 import { Header } from "@/components/pulse/Header";
-import { AiSummaryCard, ScoreRow } from "@/components/pulse/SummaryCards";
+import { ScoreRow } from "@/components/pulse/SummaryCards";
 import { SleepSection } from "@/components/pulse/SleepSection";
 import { SleepPage } from "@/components/pulse/SleepPage";
 import { ActivitySection } from "@/components/pulse/ActivitySection";
@@ -57,7 +57,6 @@ function Dashboard() {
         <Header />
         {tab === "today" ? (
           <>
-            <AiSummaryCard />
             <ScoreRow />
             <div className="grid gap-4 md:grid-cols-2">
               <SleepSection delay={180} />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { MiniChart } from "./MiniChart";
 import { toneColor, toneSoft } from "./tones";
 import { sleepPhases, sleepWeek } from "@/data/pulse-data";
 
@@ -11,9 +12,16 @@ export function SleepSection({ delay = 0 }: { delay?: number }) {
 
   return (
     <SectionCard title="Sleep" delay={delay} action={<Badge tone="mint">Last 7 days</Badge>}>
-      <div className="mb-1 flex items-baseline gap-2">
-        <span className="text-3xl font-extrabold tracking-tight">7h20m</span>
-        <span className="text-xs text-muted-foreground">last night</span>
+      <div className="mb-1 flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-2">
+          <span className="text-3xl font-extrabold tracking-tight">7h20m</span>
+          <span className="text-xs text-muted-foreground">last night</span>
+        </div>
+        {!expanded && (
+          <div className="shrink-0 opacity-80">
+            <MiniChart data={sleepWeek} dataKey="hours" chartType="bar" color={toneColor.mint} height={48} width={68} />
+          </div>
+        )}
       </div>
 
       <ExpandableChart expanded={expanded}>
