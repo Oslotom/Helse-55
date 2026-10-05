@@ -1,3 +1,3 @@
 export * from "./SleepComponent";
-export * from "./HeroGif";
-export * from "./IphoneMockup";
+export * from "./WeightComponent";
+export * from "./AnimatedHealthCards";

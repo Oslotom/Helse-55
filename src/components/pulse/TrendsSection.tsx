@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
-import { SectionCard, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { SectionCard, ChartFrame, Badge } from "./primitives";
+import { Expandable } from "./Expandable";
 import { toneColor } from "./tones";
 import { cn } from "@/lib/utils";
 import { weeklyTrends } from "@/data/pulse-data";
@@ -33,7 +34,7 @@ function computeTrend(trend: (typeof weeklyTrends)[number]) {
 }
 
 export function TrendsSection({ delay = 0 }: { delay?: number }) {
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <SectionCard
@@ -41,6 +42,7 @@ export function TrendsSection({ delay = 0 }: { delay?: number }) {
       delay={delay}
       action={<Badge tone="mint">5 weeks</Badge>}
       className="md:col-span-2"
+      onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="flex flex-wrap gap-2">
         {weeklyTrends.map((trend) => {
@@ -72,7 +74,7 @@ export function TrendsSection({ delay = 0 }: { delay?: number }) {
         })}
       </div>
 
-      <ExpandableChart expanded={expanded}>
+      <Expandable isExpanded={isExpanded}>
         <div className="mt-2 flex flex-col divide-y divide-[var(--track)]">
           {weeklyTrends.map((trend) => {
             const { last, diff, pct, flat, improved } = computeTrend(trend);
@@ -123,14 +125,7 @@ export function TrendsSection({ delay = 0 }: { delay?: number }) {
             );
           })}
         </div>
-      </ExpandableChart>
-
-      <ExpandToggle
-        expanded={expanded}
-        onClick={() => setExpanded((e) => !e)}
-        labelShow="Show details"
-        labelHide="Hide details"
-      />
+      </Expandable>
     </SectionCard>
   );
 }

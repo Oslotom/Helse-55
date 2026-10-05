@@ -1,8 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useOutletContext } from "@tanstack/react-router";
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
-import { HeroBanner } from "@/components/pulse/HeroBanner";
-import { Header } from "@/components/pulse/Header";
+import { HeroBanner, WeeklyStats } from "@/components/pulse/HeroBanner";
 import { ScoreRow } from "@/components/pulse/SummaryCards";
 import { SleepSection } from "@/components/pulse/SleepSection";
 import { SleepPage } from "@/components/pulse/SleepPage";
@@ -10,12 +9,12 @@ import { ActivitySection } from "@/components/pulse/ActivitySection";
 import { StepsPage } from "@/components/pulse/StepsPage";
 import { BodySection } from "@/components/pulse/BodySection";
 import { HeartSection } from "@/components/pulse/HeartSection";
-import { TrendsSection } from "@/components/pulse/TrendsSection";
 import { MoodSection } from "@/components/pulse/MoodSection";
+import { AddSession } from "@/components/pulse/AddSession";
+import { SessionCalendar } from "@/components/pulse/SessionCalendar";
 import { MoodCheckIn } from "@/components/pulse/MoodCheckIn";
 import { BottomTabs, tabs, type TabKey } from "@/components/pulse/BottomTabs";
 import { SectionCard } from "@/components/pulse/primitives";
-import { DiagramSection } from "@/components/pulse/DiagramSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,26 +47,35 @@ function ComingSoon({ label }: { label: string }) {
   );
 }
 
+import { useTabStore } from "@/lib/tab-store";
+import { useFeatureStore } from "@/lib/feature-store";
+import { ProfilePage } from "@/components/pulse/ProfilePage";
+
 function Dashboard() {
-  const [tab, setTab] = useState<TabKey>("today");
+  const { tab } = useTabStore();
   const activeLabel = tabs.find((t) => t.key === tab)?.label ?? "";
+  const enabled = useFeatureStore((s) => s.enabled);
 
   return (
     <main className="mx-auto w-full max-w-2xl px-4 pt-6 pb-28">
+      {tab === "profile" ? (
+        <div className="flex flex-col gap-4">
+          <ProfilePage />
+        </div>
+      ) : (
       <div className="flex flex-col gap-4">
         <HeroBanner />
-        <Header />
-        <DiagramSection />
+        <WeeklyStats />
+        <SessionCalendar />
         {tab === "today" ? (
           <>
             <ScoreRow />
-            <div className="grid gap-4 md:grid-cols-2">
-              <SleepSection delay={180} />
-              <ActivitySection delay={240} />
-              <BodySection delay={300} />
-              <HeartSection delay={360} />
-              <MoodSection delay={420} />
-              <TrendsSection delay={480} />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {enabled.sleep && <SleepSection delay={180} />}
+              {enabled.steps && <ActivitySection delay={240} />}
+              {enabled.weight && <BodySection delay={300} />}
+              {enabled.heart && <HeartSection delay={360} />}
+              {enabled.mood && <MoodSection delay={420} />}
             </div>
           </>
         ) : tab === "sleep" ? (
@@ -78,6 +86,7 @@ function Dashboard() {
           <ComingSoon label={activeLabel} />
         )}
       </div>
+      )}
       <div className="mt-10 flex justify-center">
         <Link
           to="/landing"
@@ -87,8 +96,9 @@ function Dashboard() {
           <Sparkles className="size-3.5" />
         </Link>
       </div>
-      <BottomTabs active={tab} onChange={setTab} />
-      <MoodCheckIn />
+      
+      {enabled.mood && <MoodCheckIn />}
+<AddSession />
     </main>
   );
 }

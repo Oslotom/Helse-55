@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Activity, ArrowRight, Heart, Lock, Moon, Smartphone, Sparkles } from "lucide-react";
-import { HeroGif, IphoneMockup, SleepComponent } from "@/components/landing";
+import { AnimatedHealthCards, SleepComponent } from "@/components/landing";
 
 export const Route = createFileRoute("/landing")({
   head: () => ({
@@ -80,30 +80,32 @@ function LandingPage() {
   <div className="mx-auto grid w-full max-w-5xl items-center gap-12 md:grid-cols-2">
     <div className="rise-in">
       <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-        Stay Motivated
+        Your daily health,
+        <br />
+        in view
       </h1>
       <p className="mt-4 max-w-md text-base font-semibold text-muted-foreground">
-        Hevy is a free workout tracker for iOS and Android. Build routines and track progress with friends.
+        Pulse brings sleep, activity, weight and heart rate into one calm daily dashboard. See the
+        whole you, at a glance.
       </p>
       <div className="mt-7 flex flex-wrap items-center gap-3">
-        <a
-          href="https://apps.apple.com/app/apple-store/id1458862350"
+        <Link
+          to="/app"
           className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
         >
-          App Store
-        </a>
+          Open the app
+          <ArrowRight className="size-4" />
+        </Link>
         <a
-          href="https://play.google.com/store/apps/details?id=com.hevy"
+          href="#features"
           className="inline-flex items-center rounded-full border-[var(--track)] px-6 py-3 text-sm font-extrabold text-foreground transition-colors hover:bg-accent"
         >
-          Google Play
+          Learn more
         </a>
       </div>
     </div>
     <div className="relative flex justify-center md:justify-end">
-      <IphoneMockup>
-        <HeroGif />
-      </IphoneMockup>
+      <AnimatedHealthCards />
     </div>
   </div>
 </section>
@@ -154,20 +156,21 @@ function LandingPage() {
   >
     <h2 className="text-3xl font-extrabold tracking-tight">Ready to get started?</h2>
     <p className="mx-auto mt-3 max-w-md text-sm font-semibold text-muted-foreground">
-      The Easiest Way to Stay Consistent in the Gym
+      Pulse is a demo app, but you can view the source code and contribute on GitHub.
     </p>
     <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-      <a
-        href="https://apps.apple.com/app/apple-store/id1458862350"
+      <Link
+        to="/app"
         className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-extrabold text-background transition-transform duration-200 hover:scale-105"
       >
-        App Store
-      </a>
+        Open the app
+        <ArrowRight className="size-4" />
+      </Link>
       <a
-        href="https://play.google.com/store/apps/details?id=com.hevy"
+        href="https://github.com/TannerLinsley/pulse"
         className="inline-flex items-center rounded-full border-[var(--track)] px-6 py-3 text-sm font-extrabold text-foreground transition-colors hover:bg-accent"
       >
-        Google Play
+        GitHub
       </a>
     </div>
   </div>

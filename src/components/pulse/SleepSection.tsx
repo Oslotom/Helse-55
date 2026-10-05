@@ -1,30 +1,31 @@
 import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis } from "recharts";
-import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { SectionCard, ChartTooltip, ChartFrame, Badge } from "./primitives";
 import { MiniChart } from "./MiniChart";
+import { Expandable } from "./Expandable";
 import { toneColor, toneSoft } from "./tones";
 import { sleepPhases, sleepWeek } from "@/data/pulse-data";
 
 const totalPhases = sleepPhases.reduce((sum, p) => sum + p.minutes, 0);
 
 export function SleepSection({ delay = 0 }: { delay?: number }) {
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <SectionCard title="Sleep" delay={delay} action={<Badge tone="mint">Last 7 days</Badge>}>
+    <SectionCard title="Sleep" delay={delay} action={<Badge tone="mint">Last 7 days</Badge>} onClick={() => setIsExpanded(!isExpanded)}>
       <div className="mb-1 flex items-center justify-between gap-4">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-extrabold tracking-tight">7h20m</span>
           <span className="text-xs text-muted-foreground">last night</span>
         </div>
-        {!expanded && (
+        {!isExpanded && (
           <div className="shrink-0 opacity-80">
             <MiniChart data={sleepWeek} dataKey="hours" chartType="bar" color={toneColor.mint} height={48} width={68} />
           </div>
         )}
       </div>
 
-      <ExpandableChart expanded={expanded}>
+      <Expandable isExpanded={isExpanded}>
         <ChartFrame height={168}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={sleepWeek} margin={{ top: 12, right: 4, left: 4, bottom: 0 }}>
@@ -90,9 +91,7 @@ export function SleepSection({ delay = 0 }: { delay?: number }) {
             </div>
           ))}
         </div>
-      </ExpandableChart>
-
-      <ExpandToggle expanded={expanded} onClick={() => setExpanded((e) => !e)} />
+      </Expandable>
     </SectionCard>
   );
 }

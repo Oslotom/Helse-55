@@ -15,17 +15,20 @@ export function SectionCard({
   children,
   delay = 0,
   className,
+  onClick,
 }: {
   title?: string;
   action?: ReactNode;
   children: ReactNode;
   delay?: number;
   className?: string;
+  onClick?: () => void;
 }) {
   return (
     <section
       className={cn("card-soft rise-in p-5", className)}
       style={{ animationDelay: `${delay}ms` }}
+      onClick={onClick}
     >
       {(title || action) && (
         <div className="mb-4 flex items-center justify-between gap-3">
@@ -149,48 +152,11 @@ export function ChartTooltip({
   );
 }
 
-export function ChartFrame({ children, height = 180 }: { children: ReactNode; height?: number }) {
+export function ChartFrame({ children, height = 240 }: { children: ReactNode; height?: number }) {
   const mounted = useMounted();
   return (
     <div style={{ height }} className="w-full">
       {mounted ? children : null}
     </div>
-  );
-}
-
-export function ExpandableChart({ expanded, children }: { expanded: boolean; children: ReactNode }) {
-  return (
-    <div
-      className="grid transition-[grid-template-rows] duration-300 ease-out"
-      style={{ gridTemplateRows: expanded ? "1fr" : "0fr" }}
-    >
-      <div className="overflow-hidden">{children}</div>
-    </div>
-  );
-}
-
-export function ExpandToggle({
-  expanded,
-  onClick,
-  labelShow = "Show chart",
-  labelHide = "Hide chart",
-}: {
-  expanded: boolean;
-  onClick: () => void;
-  labelShow?: string;
-  labelHide?: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-expanded={expanded}
-      className="mt-1 flex w-full items-center justify-center gap-1 rounded-xl py-1.5 text-xs font-bold text-muted-foreground transition-colors hover:text-foreground"
-    >
-      {expanded ? labelHide : labelShow}
-      <ChevronDown
-        className={cn("size-3.5 transition-transform duration-300", expanded && "rotate-180")}
-      />
-    </button>
   );
 }

@@ -3,6 +3,7 @@ import { Sparkles } from "lucide-react";
 import { ProgressRing, Badge } from "./primitives";
 import { toneSoft } from "./tones";
 import { aiSummaries, scores } from "@/data/pulse-data";
+import { useFeatureStore } from "@/lib/feature-store";
 
 export function AiSummaryCard() {
   const [index] = useState(() => Math.floor(Math.random() * aiSummaries.length));
@@ -31,12 +32,14 @@ export function AiSummaryCard() {
 }
 
 export function ScoreRow() {
+  const sleepOn = useFeatureStore((s) => s.enabled.sleep);
+  const visible = scores.filter((s) => s.key !== "sleep" || sleepOn);
   return (
     <section
-      className="rise-in card-soft grid grid-cols-3 gap-2 p-5"
-      style={{ animationDelay: "120ms" }}
+      className="rise-in card-soft grid gap-2 p-5"
+      style={{ animationDelay: "120ms", gridTemplateColumns: `repeat(${visible.length}, 1fr)` }}
     >
-      {scores.map((s, i) => (
+      {visible.map((s, i) => (
         <div key={s.key} className="flex justify-center">
           <ProgressRing
             value={s.value}

@@ -10,15 +10,16 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
-import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Pill } from "./primitives";
+import { SectionCard, ChartTooltip, ChartFrame, Pill } from "./primitives";
 import { MiniChart } from "./MiniChart";
+import { Expandable } from "./Expandable";
 import { Progress } from "@/components/ui/progress";
 import { toneColor, toneSoft } from "./tones";
 import { activityWeek, stepsGoal, stepsMonth } from "@/data/pulse-data";
 
 export function ActivitySection({ delay = 0 }: { delay?: number }) {
   const [range, setRange] = useState<"7d" | "5d">("7d");
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const data = range === "7d" ? activityWeek : activityWeek.slice(-5);
   const total = data.reduce((s, d) => s + d.steps, 0);
   const stepsToday = activityWeek[activityWeek.length - 1]!.steps;
@@ -30,15 +31,33 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
       title="Activity"
       delay={delay}
       action={
-        <div className="flex gap-1.5">
-          <Pill tone="sky" active={range === "7d"} onClick={() => setRange("7d")}>
+        <div
+          className="flex gap-1.5"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <Pill
+            tone="sky"
+            active={range === "7d"}
+            onClick={() => {
+              setRange("7d");
+            }}
+          >
             7 days
           </Pill>
-          <Pill tone="sky" active={range === "5d"} onClick={() => setRange("5d")}>
+          <Pill
+            tone="sky"
+            active={range === "5d"}
+            onClick={() => {
+              setRange("5d");
+            }}
+          >
             5 days
           </Pill>
         </div>
       }
+      onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="mb-1 flex items-center justify-between gap-4">
         <div className="flex items-baseline gap-2">
@@ -47,7 +66,7 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
           </span>
           <span className="text-xs text-muted-foreground">avg steps / day</span>
         </div>
-        {!expanded && (
+        {!isExpanded && (
           <div className="shrink-0 opacity-80">
             <MiniChart data={data} dataKey="steps" chartType="bar" color={toneColor.sky} height={48} width={68} />
           </div>
@@ -59,7 +78,7 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
           {stepsToday.toLocaleString("en-GB")} / {stepsGoal.toLocaleString("en-GB")} today
         </span>
       </div>
-      <ExpandableChart expanded={expanded}>
+      <Expandable isExpanded={isExpanded}>
         <ChartFrame height={180}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart key={range} data={data} margin={{ top: 12, right: 4, left: 4, bottom: 0 }}>
@@ -145,9 +164,7 @@ export function ActivitySection({ delay = 0 }: { delay?: number }) {
             </AreaChart>
           </ResponsiveContainer>
         </ChartFrame>
-      </ExpandableChart>
-
-      <ExpandToggle expanded={expanded} onClick={() => setExpanded((e) => !e)} />
+      </Expandable>
     </SectionCard>
   );
 }

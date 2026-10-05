@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { SectionCard, ChartTooltip, ChartFrame, Badge } from "./primitives";
 import { MiniChart } from "./MiniChart";
+import { Expandable } from "./Expandable";
 import { toneColor } from "./tones";
 import { restingHr } from "@/data/pulse-data";
 
 export function HeartSection({ delay = 0 }: { delay?: number }) {
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const latest = restingHr[restingHr.length - 1]!;
   const avg = Math.round(restingHr.reduce((s, d) => s + d.bpm, 0) / restingHr.length);
 
@@ -15,20 +16,21 @@ export function HeartSection({ delay = 0 }: { delay?: number }) {
       title="Resting heart rate"
       delay={delay}
       action={<Badge tone="amber">14 days</Badge>}
+      onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="mb-1 flex items-center justify-between gap-4">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-extrabold tracking-tight">{latest.bpm} bpm</span>
           <span className="text-xs text-muted-foreground">{avg} bpm average</span>
         </div>
-        {!expanded && (
+        {!isExpanded && (
           <div className="shrink-0 opacity-80">
             <MiniChart data={restingHr} dataKey="bpm" chartType="area" color={toneColor.amber} height={48} width={68} />
           </div>
         )}
       </div>
 
-      <ExpandableChart expanded={expanded}>
+      <Expandable isExpanded={isExpanded}>
         <ChartFrame height={170}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={restingHr} margin={{ top: 12, right: 8, left: 0, bottom: 0 }}>
@@ -71,9 +73,7 @@ export function HeartSection({ delay = 0 }: { delay?: number }) {
             </LineChart>
           </ResponsiveContainer>
         </ChartFrame>
-      </ExpandableChart>
-
-      <ExpandToggle expanded={expanded} onClick={() => setExpanded((e) => !e)} />
+      </Expandable>
     </SectionCard>
   );
 }

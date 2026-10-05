@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { SectionCard, ChartTooltip, ChartFrame, ExpandableChart, ExpandToggle, Badge } from "./primitives";
+import { SectionCard, ChartTooltip, ChartFrame, Badge } from "./primitives";
 import { MiniChart } from "./MiniChart";
+import { Expandable } from "./Expandable";
 import { toneColor } from "./tones";
 import { weightMonth } from "@/data/pulse-data";
 
 export function BodySection({ delay = 0 }: { delay?: number }) {
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const latest = weightMonth[weightMonth.length - 1]!;
   const first = weightMonth[0]!;
   const diff = Math.round((latest.kg - first.kg) * 10) / 10;
 
   return (
-    <SectionCard title="Weight" delay={delay} action={<Badge tone="lavender">30 days</Badge>}>
+    <SectionCard title="Weight" delay={delay} action={<Badge tone="lavender">30 days</Badge>} onClick={() => setIsExpanded(!isExpanded)}>
       <div className="mb-1 flex items-center justify-between gap-4">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-extrabold tracking-tight">{latest.kg} kg</span>
@@ -20,14 +21,14 @@ export function BodySection({ delay = 0 }: { delay?: number }) {
             {diff <= 0 ? diff : `+${diff}`} kg this month
           </span>
         </div>
-        {!expanded && (
+        {!isExpanded && (
           <div className="shrink-0 opacity-80">
             <MiniChart data={weightMonth} dataKey="kg" chartType="area" color={toneColor.lavender} height={48} width={68} />
           </div>
         )}
       </div>
 
-      <ExpandableChart expanded={expanded}>
+      <Expandable isExpanded={isExpanded}>
         <ChartFrame height={180}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={weightMonth} margin={{ top: 12, right: 6, left: 0, bottom: 0 }}>
@@ -78,9 +79,7 @@ export function BodySection({ delay = 0 }: { delay?: number }) {
             </AreaChart>
           </ResponsiveContainer>
         </ChartFrame>
-      </ExpandableChart>
-
-      <ExpandToggle expanded={expanded} onClick={() => setExpanded((e) => !e)} />
+      </Expandable>
     </SectionCard>
   );
 }

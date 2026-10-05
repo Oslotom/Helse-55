@@ -36,9 +36,9 @@ export function Header() {
           aria-label="Notifications"
           className="card-soft relative flex size-10 items-center justify-center rounded-full transition-transform duration-200 hover:scale-105"
         >
-          <Bell className="size-4 text-muted-foreground" />
+          <Bell className="bell-ring size-4 text-muted-foreground" />
           <span
-            className="absolute top-2 right-2.5 size-2 rounded-full"
+            className="absolute top-2 right-2.5 size-2 animate-pulse rounded-full"
             style={{ backgroundColor: "var(--amber)" }}
           />
         </button>
